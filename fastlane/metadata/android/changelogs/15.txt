@@ -1,3 +1,0 @@
-* Fixed Showing Black screen #197
-* Fixed loading of deeplink playlist #198
-* Fixed broken things #210,#209,#198

@@ -1,2 +1,0 @@
-* Fixed Song is not playable due to server restriction!
-* Added hl code #298
