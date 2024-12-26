@@ -4,6 +4,9 @@
   <img src="https://github.com/user-attachments/assets/0d3db989-fefa-4381-bf0c-8bd5ebdabd7b" alt="Icono de OpenTune" width="200"/>
 </div>
 
+![mockup](https://github.com/user-attachments/assets/9915696a-bcfd-4b9b-8dbd-c81e5a9a137e)
+
+
 <p align="center">
   <a href="https://github.com/Arturo254/OpenTune/releases">
     <img src="https://img.shields.io/github/v/release/Arturo254/InnerTune?style=for-the-badge&logo=github&color=blue" alt="Última versión"/>
