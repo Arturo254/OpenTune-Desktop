@@ -2,7 +2,7 @@
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
 AppVersion=1.10.4+21
 AppName=OpenTune Desktop
-AppPublisher=anandnet
+AppPublisher=Arturo254
 AppPublisherURL=https://github.com/Arturo254/OpenTune
 AppSupportURL=https://github.com/Arturo254/OpenTune
 AppUpdatesURL=https://github.com/Arturo254/OpenTune

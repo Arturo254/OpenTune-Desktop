@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-    package="com.anandnet.opentune">
+    package="com.Arturo254.opentune">
    <application
         android:label="OpenTune Desktop"
         android:name="${applicationName}"

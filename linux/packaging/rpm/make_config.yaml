@@ -1,8 +1,8 @@
 icon: assets/icons/icon.png
 summary: An application to stream Music
 group: Application/Multimedia
-vendor: anandnet
-packager: anandnet
+vendor: Arturo254
+packager: Arturo254
 license: GPLv3
 url: https://github.com/Arturo254/OpenTune
 

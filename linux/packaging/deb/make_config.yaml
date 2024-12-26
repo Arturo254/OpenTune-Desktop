@@ -1,7 +1,7 @@
 display_name: OpenTune Desktop
 package_name: opentune
 maintainer:
-  name: anandnet
+  name: Arturo254
 priority: optional
 section: x11
 installed_size: 20000
