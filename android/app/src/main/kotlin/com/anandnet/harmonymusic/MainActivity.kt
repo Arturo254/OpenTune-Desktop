@@ -1,4 +1,4 @@
-package com.anandnet.harmonymusic
+package com.anandnet.opentune
 
 import io.flutter.embedding.android.FlutterActivity
 

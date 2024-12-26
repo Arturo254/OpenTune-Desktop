@@ -7,7 +7,7 @@ import 'package:audiotags/audiotags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
+import 'package:opentune/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:player_response/player_response.dart';
 

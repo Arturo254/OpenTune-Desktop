@@ -1,6 +1,6 @@
 {
-    "name": "harmonymusic",
-    "short_name": "harmonymusic",
+    "name": "opentune",
+    "short_name": "opentune",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
