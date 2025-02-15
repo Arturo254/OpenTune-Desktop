@@ -1,6 +1,6 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
-AppVersion=1.10.4+21
+AppVersion=1.9.4+21
 AppName=OpenTune Desktop
 AppPublisher=anandnet
 AppPublisherURL=https://github.com/Arturo254/OpenTune
@@ -9,7 +9,7 @@ AppUpdatesURL=https://github.com/Arturo254/OpenTune
 DefaultDirName={autopf}\opentune
 DisableProgramGroupPage=yes
 OutputDir=.
-OutputBaseFilename=opentunev1.10.4
+OutputBaseFilename=opentunev1.9.4
 Compression=lzma
 SolidCompression=yes
 SetupIconFile=..\..\windows\runner\resources\app_icon.ico
