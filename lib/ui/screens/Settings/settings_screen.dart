@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opentune/utils/helper.dart';
-import 'package:opentune/utils/lang_mapping.dart';
+import 'package:harmonymusic/utils/helper.dart';
+import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                             onTap: () {
                               launchUrl(
                                 Uri.parse(
-                                  'https://github.com/Arturo254/OpenTune-Desktop/releases/latest',
+                                  'https://github.com/anandnet/Harmony-Music/releases/latest',
                                 ),
                                 mode: LaunchMode.externalApplication,
                               );
@@ -67,8 +67,8 @@ class SettingsScreen extends StatelessWidget {
                             tileColor: Theme.of(context).colorScheme.secondary,
                             contentPadding:
                                 const EdgeInsets.only(left: 8, right: 10),
-                            leading: const CircleAvatar(
-                                child: Icon(Icons.download_rounded)),
+                            leading:
+                                const CircleAvatar(child: Icon(Icons.download)),
                             title: Text("newVersionAvailable".tr),
                             visualDensity: const VisualDensity(horizontal: -2),
                             subtitle: Text(
@@ -424,6 +424,17 @@ class SettingsScreen extends StatelessWidget {
                             onChanged: settingsController
                                 .toggleRestorePlaybackSession),
                       )),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("autoOpenPlayer".tr),
+                    subtitle: Text("autoOpenPlayerDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController.autoOpenPlayer.value,
+                          onChanged: settingsController.toggleAutoOpenPlayer),
+                    ),
+                  ),
                   if (!isDesktop)
                     ListTile(
                       contentPadding:
@@ -488,7 +499,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                 title: "download".tr,
-                icon: Icons.download_rounded,
+                icon: Icons.download,
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -584,7 +595,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                   title: "${"backup".tr} & ${"restore".tr}",
-                  icon: Icons.restore_rounded,
+                  icon: Icons.restore,
                   children: [
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -616,6 +627,29 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ]),
               CustomExpansionTile(
+                  icon: Icons.miscellaneous_services,
+                  title: "misc".tr,
+                  children: [
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("resetToDefault".tr),
+                      subtitle: Text(
+                        "resetToDefaultDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      onTap: () {
+                        settingsController
+                            .resetAppSettingsToDefault()
+                            .then((_) {
+                          ScaffoldMessenger.of(Get.context!).showSnackBar(
+                              snackbar(Get.context!, "resetToDefaultMsg".tr,
+                                  size: SanckBarSize.BIG,
+                                  duration: const Duration(seconds: 2)));
+                        });
+                      },
+                    ),
+                  ]),
+              CustomExpansionTile(
                 icon: Icons.info,
                 title: "appInfo".tr,
                 children: [
@@ -623,14 +657,14 @@ class SettingsScreen extends StatelessWidget {
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
                     title: Text("github".tr),
                     subtitle: Text(
-                      "${"githubDes".tr}${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0 || !isBottomNavActive) ? "" : "\n\n${settingsController.currentVersion} ${"by".tr} "}",
+                      "${"githubDes".tr}${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0 || !isBottomNavActive) ? "" : "\n\n${settingsController.currentVersion} ${"by".tr} anandnet"}",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     isThreeLine: true,
                     onTap: () {
                       launchUrl(
                         Uri.parse(
-                          'https://github.com/Arturo254/OpenTune',
+                          'https://github.com/anandnet/Harmony-Music',
                         ),
                         mode: LaunchMode.externalApplication,
                       );
@@ -641,7 +675,7 @@ class SettingsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "OpenTune Desktop",
+                          "Harmony Music",
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(settingsController.currentVersion,
@@ -656,7 +690,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
-              "${settingsController.currentVersion} ${"by".tr} ",
+              "${settingsController.currentVersion} ${"by".tr} anandnet",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

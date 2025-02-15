@@ -5,17 +5,17 @@ import 'package:get/get.dart';
 import '/ui/navigator.dart';
 import '/ui/widgets/sort_widget.dart';
 
-void printERROR(dynamic text, {String tag = "OpenTune Desktop"}) {
+void printERROR(dynamic text, {String tag = "Harmony Music"}) {
   if (kReleaseMode) return;
   debugPrint("\x1B[31m[$tag]: $text\x1B[0m");
 }
 
-void printWarning(dynamic text, {String tag = 'OpenTune Desktop'}) {
+void printWarning(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;
   debugPrint("\x1B[33m[$tag]: $text\x1B[34m");
 }
 
-void printINFO(dynamic text, {String tag = 'OpenTune Desktop'}) {
+void printINFO(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;
   debugPrint("\x1B[32m[$tag]: $text\x1B[34m");
 }
@@ -164,7 +164,7 @@ void sortArtist(
 Future<bool> newVersionCheck(String currentVersion) async {
   try {
     final tags = (await Dio()
-            .get("https://api.github.com/repos/Arturo254/OpenTune-Desktop/tags"))
+            .get("https://api.github.com/repos/anandnet/Harmony-Music/tags"))
         .data;
     final availableVersion = tags[0]['name'] as String;
     List currentVersion_ = currentVersion.substring(1).split(".");

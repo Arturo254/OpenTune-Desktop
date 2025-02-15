@@ -7,9 +7,7 @@ import '/ui/widgets/common_dialog_widget.dart';
 
 class SongInfoDialog extends StatelessWidget {
   final MediaItem song;
-  final bool isDownloaded;
-  const SongInfoDialog(
-      {super.key, required this.song, required this.isDownloaded});
+  const SongInfoDialog({super.key, required this.song});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class SongInfoDialog extends StatelessWidget {
               children: [
                 InfoItem(title: "id".tr, value: song.id),
                 InfoItem(title: "title".tr, value: song.title),
-                InfoItem(title: "albums".tr, value: song.album ?? "NA"),
+                InfoItem(title: "album".tr, value: song.album ?? "NA"),
                 InfoItem(title: "artists".tr, value: song.artist ?? "NA"),
                 InfoItem(
                     title: "duration".tr,
@@ -77,15 +75,18 @@ class SongInfoDialog extends StatelessWidget {
       "loudnessDb": null,
       "approxDurationMs": null
     };
-    if (isDownloaded) {
+    if (Hive.box("SongDownloads").containsKey(id)) {
       final song = Hive.box("SongDownloads").get(id);
 
       tempstreamInfo =
           song["streamInfo"] == null ? nullVal : song["streamInfo"][1];
     } else {
       final dbStreamData = Hive.box("SongsUrlCache").get(id);
-      tempstreamInfo = dbStreamData != null
-          ? dbStreamData[Hive.box('AppPrefs').get('streamingQuality') + 1]
+      tempstreamInfo = dbStreamData != null &&
+              dbStreamData.runtimeType.toString().contains("Map")
+          ? dbStreamData[Hive.box('AppPrefs').get('streamingQuality') == 0
+              ? 'lowQualityAudio'
+              : "highQualityAudio"]
           : nullVal;
     }
     return tempstreamInfo;

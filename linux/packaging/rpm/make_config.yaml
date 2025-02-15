@@ -1,16 +1,16 @@
 icon: assets/icons/icon.png
 summary: An application to stream Music
 group: Application/Multimedia
-vendor: Arturo254
-packager: Arturo254
+vendor: anandnet
+packager: anandnet
 license: GPLv3
-url: https://github.com/Arturo254/OpenTune
+url: https://github.com/anandnet/Harmony-Music
 
 requires:
   - mpv-libs
   - libappindicator
 
-display_name: OpenTune Desktop
+display_name: Harmony Music
 
 keywords:
   - Opensource

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opentune/ui/widgets/modification_list.dart';
+import 'package:harmonymusic/ui/widgets/modification_list.dart';
 
 import '../screens/Artists/artist_screen_controller.dart';
 import '../screens/Search/search_result_screen_controller.dart';
@@ -118,6 +118,7 @@ class SeparateTabItemWidget extends StatelessWidget {
                                   title,
                                   isCompleteList,
                                   isArtistSongs: true,
+                                  artist: artistController.artist_,
                                   scrollController: scrollController,
                                 )
                               : ModificationList(

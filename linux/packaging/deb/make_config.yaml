@@ -1,7 +1,7 @@
-display_name: OpenTune Desktop
-package_name: opentune
+display_name: Harmony Music
+package_name: harmonymusic
 maintainer:
-  name: Arturo254
+  name: anandnet
 priority: optional
 section: x11
 installed_size: 20000
