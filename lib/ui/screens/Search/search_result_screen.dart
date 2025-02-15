@@ -51,7 +51,7 @@ class SearchResultScreen extends StatelessWidget {
                               ),
                               IconButton(
                                 icon: Icon(
-                                  Icons.arrow_back_ios_new,
+                                  Icons.arrow_back_ios_new_rounded,
                                   color: Theme.of(context)
                                       .textTheme
                                       .titleMedium!

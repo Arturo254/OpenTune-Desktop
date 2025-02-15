@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/helper.dart';
+import 'package:opentune/utils/helper.dart';
 import 'package:smtc_windows/smtc_windows.dart';
 
 import '../ui/player/player_controller.dart';
@@ -54,6 +54,8 @@ class WindowsAudioService extends GetxService {
           break;
         case PlayButtonState.loading:
           smtc.setPlaybackStatus(PlaybackStatus.Paused);
+          break;
+        default:
           break;
       }
     });

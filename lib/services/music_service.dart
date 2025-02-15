@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:hive/hive.dart';
@@ -331,10 +332,9 @@ class MusicServices extends getx.GetxService {
     }
     final data = Map.from(_context);
     data['browseId'] = browseId;
-    final Map<String, dynamic> response =
-        (await _sendRequest('browse', data)).data;
+    Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
     if (playlistId != null) {
-      final Map<String, dynamic> header =
+      Map<String, dynamic> header =
           nav(response, ['header', "musicDetailHeaderRenderer"]) ??
               nav(response, [
                 'contents',
@@ -349,24 +349,31 @@ class MusicServices extends getx.GetxService {
                 "musicResponsiveHeaderRenderer"
               ]);
 
-      final Map<String, dynamic> results =
-          nav(response, musicPlaylistShelfRenderer) ??
-              nav(
-                response,
-                [
-                  'contents',
-                  "singleColumnBrowseResultsRenderer",
-                  "tabs",
-                  0,
-                  "tabRenderer",
-                  "content",
-                  'sectionListRenderer',
-                  'contents',
-                  0,
-                  "musicPlaylistShelfRenderer"
-                ],
-              );
-      final Map<String, dynamic> playlist = {'id': results['playlistId']};
+      Map<String, dynamic> results = nav(
+            response,
+            [
+              'contents',
+              "singleColumnBrowseResultsRenderer",
+              "tabs",
+              0,
+              "tabRenderer",
+              "content",
+              'sectionListRenderer',
+              'contents',
+              0,
+              "musicPlaylistShelfRenderer"
+            ],
+          ) ??
+          nav(response, [
+            "contents",
+            "twoColumnBrowseResultsRenderer",
+            "secondaryContents",
+            "sectionListRenderer",
+            "contents",
+            0,
+            "musicPlaylistShelfRenderer",
+          ]);
+      Map<String, dynamic> playlist = {'id': results['playlistId']};
 
       playlist['title'] = nav(header, title_text);
       playlist['thumbnails'] = nav(header, thumnail_cropped) ??
@@ -377,7 +384,7 @@ class MusicServices extends getx.GetxService {
             "thumbnails"
           ]);
       playlist["description"] = nav(header, description);
-      final int runCount = header['subtitle']['runs'].length;
+      int runCount = header['subtitle']['runs'].length;
       if (runCount > 1) {
         playlist['author'] = {
           'name': nav(header, subtitle2),
@@ -388,38 +395,40 @@ class MusicServices extends getx.GetxService {
         }
       }
 
-      final int secondSubtitleRunCount =
-          header['secondSubtitle']['runs'].length;
-      final String count = (((header['secondSubtitle']['runs']
+      int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
+      String count = (((header['secondSubtitle']['runs']
                       [secondSubtitleRunCount % 3]['text'])
                   .split(' ')[0])
               .split(',') as List)
           .join();
-      final int songCount = int.parse(count);
+      int songCount = int.parse(count);
       if (header['secondSubtitle']['runs'].length > 1) {
         playlist['duration'] = header['secondSubtitle']['runs']
             [(secondSubtitleRunCount % 3) + 2]['text'];
       }
       playlist['trackCount'] = songCount;
 
-      // requestFunc(additionalParams) async => (await _sendRequest("browse", data,
-      //         additionalParams: additionalParams))
-      //     .data;
-
-      requestFuncCountinuation(cont) async =>
-          (await _sendRequest("browse", {...data, ...cont})).data;
+      requestFunc(additionalParams) async => (await _sendRequest("browse", data,
+              additionalParams: additionalParams))
+          .data;
 
       if (songCount > 0) {
         playlist['tracks'] = parsePlaylistItems(results['contents']);
         limit = songCount;
+        var songsToGet = min(limit, songCount);
 
         List<dynamic> parseFunc(contents) => parsePlaylistItems(contents);
-
-        playlist['tracks'] = [
-          ...(playlist['tracks']),
-          ...(await getContinuationsPlaylist(
-              results, limit, requestFuncCountinuation, parseFunc))
-        ];
+        if (results.containsKey('continuations')) {
+          playlist['tracks'] = [
+            ...(playlist['tracks']),
+            ...(await getContinuations(
+                results,
+                'musicPlaylistShelfContinuation',
+                songsToGet - (playlist['tracks']).length as int,
+                requestFunc,
+                parseFunc))
+          ];
+        }
       }
       playlist['duration_seconds'] = sumTotalDuration(playlist);
       return playlist;
@@ -458,8 +467,7 @@ class MusicServices extends getx.GetxService {
     album['tracks'] = parsePlaylistItems(results['contents'],
         artistsM: album['artists'],
         thumbnailsM: album["thumbnails"],
-        albumIdName: {"id": albumId, 'name': album['title']},
-        albumYear: album['year'],
+        albumIdM: albumId,
         isAlbum: true);
     results = nav(
       response,
@@ -604,7 +612,7 @@ class MusicServices extends getx.GetxService {
         continue;
       } else if (res['musicShelfRenderer'] != null) {
         results = res['musicShelfRenderer']['contents'];
-        String? typeFilter = filter;
+        var typeFilter = filter;
 
         category = nav(res, ['musicShelfRenderer', ...title_text]);
 
@@ -693,15 +701,15 @@ class MusicServices extends getx.GetxService {
     final data = Map.from(_context);
     data['context']['client']["hl"] = 'en';
     data['browseId'] = channelId;
-    final response = (await _sendRequest("browse", data)).data;
-    final results = nav(response, [...single_column_tab, ...section_list]);
+    dynamic response = (await _sendRequest("browse", data)).data;
+    dynamic results = nav(response, [...single_column_tab, ...section_list]);
 
-    final Map<String, dynamic> artist = {'description': null, 'views': null};
-    final Map<String, dynamic> header = (response['header']
+    Map<String, dynamic> artist = {'description': null, 'views': null};
+    Map<String, dynamic> header = (response['header']
             ['musicImmersiveHeaderRenderer']) ??
         response['header']['musicVisualHeaderRenderer'];
     artist['name'] = nav(header, title_text);
-    final descriptionShelf =
+    var descriptionShelf =
         findObjectByKey(results, description_shelf[0], isKey: true);
     if (descriptionShelf != null) {
       artist['description'] = nav(descriptionShelf, description);
@@ -709,7 +717,7 @@ class MusicServices extends getx.GetxService {
           ? null
           : descriptionShelf['subheader']['runs'][0]['text'];
     }
-    final dynamic subscriptionButton = header['subscriptionButton'] != null
+    dynamic subscriptionButton = header['subscriptionButton'] != null
         ? header['subscriptionButton']['subscribeButtonRenderer']
         : null;
     artist['channelId'] = channelId;
@@ -742,7 +750,7 @@ class MusicServices extends getx.GetxService {
     browseEndpoint.remove("content");
     if (browseEndpoint.isEmpty) return result;
     data.addAll(browseEndpoint);
-    final response =
+    dynamic response =
         (await _sendRequest("browse", data, additionalParams: additionalParams))
             .data;
     final contents = nav(response, [
@@ -795,30 +803,6 @@ class MusicServices extends getx.GetxService {
               .toList();
     }
     return result;
-  }
-
-  Future<String?> getSongYear(String songId) async {
-    final data = Map.from(_context);
-    data['browseId'] = "MPTC$songId";
-    try {
-      final response = (await _sendRequest('browse', data)).data;
-      String? year = nav(response, [
-        "onResponseReceivedActions",
-        0,
-        "openPopupAction",
-        "popup",
-        "dismissableDialogRenderer",
-        "metadata",
-        "musicMultiRowListItemRenderer",
-        "secondTitle",
-        "runs",
-        2,
-        "text"
-      ]);
-      return year;
-    } catch (e) {
-      rethrow;
-    }
   }
 
   @override

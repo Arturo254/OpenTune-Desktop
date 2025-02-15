@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:opentune/ui/screens/Home/home_screen_controller.dart';
 import 'package:sidebar_with_animation/animated_side_bar.dart';
 
 class SideNavBar extends StatelessWidget {
@@ -46,9 +46,9 @@ class SideNavBar extends StatelessWidget {
                       //railDestination("Settings")
                       const NavigationRailDestination(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
-                        icon: Icon(Icons.settings),
+                        icon: Icon(Icons.settings_rounded),
                         label: SizedBox.shrink(),
-                        selectedIcon: Icon(Icons.settings),
+                        selectedIcon: Icon(Icons.settings_rounded),
                       )
                     ],
                   ),
@@ -69,13 +69,13 @@ class SideNavBar extends StatelessWidget {
                 mainLogoImage: 'assets/icons/icon.png',
                 sidebarItems: [
                   SideBarItem(
-                    iconSelected: Icons.home,
+                    iconSelected: Icons.home_rounded,
                     iconUnselected: Icons.home_outlined,
                     text: 'home'.tr,
                   ),
                   SideBarItem(
-                    iconSelected: Icons.audiotrack,
-                    iconUnselected: Icons.audiotrack,
+                    iconSelected: Icons.audiotrack_rounded,
+                    iconUnselected: Icons.audiotrack_rounded,
                     text: 'songs'.tr,
                   ),
                   SideBarItem(

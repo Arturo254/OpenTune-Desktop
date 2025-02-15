@@ -2,18 +2,14 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
-import 'package:flutter/services.dart';
-
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:device_equalizer/device_equalizer.dart';
 
-import '/services/equalizer.dart';
-import '/services/stream_service.dart';
-import '/models/hm_streaming_data.dart';
 import '/ui/player/player_controller.dart';
 import '../ui/screens/Home/home_screen_controller.dart';
 import '/services/background_task.dart';
@@ -32,7 +28,7 @@ Future<AudioHandler> initAudioService() async {
     config: const AudioServiceConfig(
       androidNotificationIcon: 'mipmap/ic_launcher_monochrome',
       androidNotificationChannelId: 'com.mycompany.myapp.audio',
-      androidNotificationChannelName: 'Harmony Music Notification',
+      androidNotificationChannelName: 'OpenTune Desktop Notification',
       androidNotificationOngoing: true,
       androidStopForegroundOnPause: true,
     ),
@@ -54,7 +50,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool loudnessNormalizationEnabled = false;
   // var networkErrorPause = false;
   bool isSongLoading = true;
-  
+  DeviceEqualizer? deviceEqualizer;
   // list of shuffled queue songs ids
   List<String> shuffledQueue = [];
 
@@ -65,7 +61,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   MyAudioHandler() {
     if (GetPlatform.isWindows || GetPlatform.isLinux) {
-      JustAudioMediaKit.title = 'Harmony music';
+      JustAudioMediaKit.title = 'OpenTune Desktop';
       JustAudioMediaKit.protocolWhitelist = const ['http', 'https', 'file'];
     }
     _player = AudioPlayer(
@@ -82,7 +78,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _listenToPlaybackForNextSong();
     _listenForSequenceStateChanges();
     final appPrefsBox = Hive.box("appPrefs");
-    _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled") ?? false);
+    _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled"));
     loopModeEnabled = appPrefsBox.get("isLoopModeEnabled") ?? false;
     shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
     queueLoopModeEnabled =
@@ -91,6 +87,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
     _listenForDurationChanges();
     if (GetPlatform.isAndroid) {
+      deviceEqualizer = DeviceEqualizer();
       _listenSessionIdStream();
     }
   }
@@ -113,7 +110,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   void _listenSessionIdStream() {
     _player.androidAudioSessionIdStream.listen((int? id) {
       if (id != null) {
-        EqualizerService.initAudioEffect(id);
+        deviceEqualizer?.initAudioEffect(id);
       }
     });
   }
@@ -394,7 +391,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   Future<void> skipToNext() async {
     final index = _getNextSongIndex();
     if (index != currentIndex) {
-      if (_player.position != Duration.zero) _player.seek(Duration.zero);
+      _player.seek(Duration.zero);
       await customAction("playByIndex", {'index': index});
     } else {
       _player.seek(Duration.zero);
@@ -449,8 +446,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
-      playbackState.add(playbackState.value
-          .copyWith(processingState: AudioProcessingState.loading));
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
@@ -459,23 +454,21 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final streamInfo = await futureStreamInfo;
       if (songIndex != currentIndex) {
         return;
-      } else if (!streamInfo.playable) {
+      } else if (streamInfo == null || !streamInfo[0]) {
         currentSongUrl = null;
         isSongLoading = false;
-        Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
-        playbackState.add(playbackState.value.copyWith(
-            processingState: AudioProcessingState.error,
-            errorCode: 404,
-            errorMessage: streamInfo.statusMSG));
+        Get.find<PlayerController>().notifyPlayError(streamInfo == null);
+        playbackState.add(playbackState.value
+            .copyWith(processingState: AudioProcessingState.error));
         return;
       }
-      currentSongUrl = currentSong.extras!['url'] = streamInfo.audio!.url;
+      currentSongUrl = currentSong.extras!['url'] = streamInfo[1]['url'];
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
-
       isSongLoading = false;
+
       if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
-        _normalizeVolume(streamInfo.audio!.loudnessDb);
+        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
       }
 
       if (restoreSession) {
@@ -510,9 +503,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         jsonData['streamInfo'] = dbStreamData != null
             ? [
                 true,
-                dbStreamData[Hive.box('AppPrefs').get('streamingQuality') == 0
-                    ? 'lowQualityAudio'
-                    : "highQualityAudio"]
+                dbStreamData[Hive.box('AppPrefs').get('streamingQuality') + 1]
               ]
             : null;
         songsCacheBox.put(song.id, jsonData);
@@ -530,22 +521,22 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(currMed);
       queue.add([currMed]);
       final streamInfo = (await futureStreamInfo);
-      if (!streamInfo.playable) {
+      if (streamInfo == null || !streamInfo[0]) {
         currentSongUrl = null;
         isSongLoading = false;
-        Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
+        Get.find<PlayerController>().notifyPlayError(streamInfo == null);
         playbackState.add(playbackState.value
             .copyWith(processingState: AudioProcessingState.error));
         return;
       }
-      currentSongUrl = currMed.extras!['url'] = streamInfo.audio!.url;
+      currentSongUrl = currMed.extras!['url'] = streamInfo[1]['url'];
 
       await _playList.add(_createAudioSource(currMed));
       isSongLoading = false;
 
       // Normalize audio
       if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
-        _normalizeVolume(streamInfo.audio!.loudnessDb);
+        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
       }
 
       await _player.play();
@@ -615,7 +606,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         shuffledQueue.insert(currentShuffleIndex + 1, song.id);
       }
     } else if (name == 'openEqualizer') {
-      EqualizerService.openEqualizer(_player.androidAudioSessionId!);
+      await deviceEqualizer?.open(_player.androidAudioSessionId!);
     } else if (name == "saveSession") {
       await saveSessionData();
     } else if (name == "setVolume") {
@@ -701,7 +692,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
-  Future<HMStreamingData> checkNGetUrl(String songId,
+  Future<List<dynamic>?> checkNGetUrl(String songId,
       {bool generateNewUrl = false, bool offlineReplacementUrl = false}) async {
     printINFO("Requested id : $songId");
     final songDownloadsBox = Hive.box("SongDownloads");
@@ -710,49 +701,25 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       printINFO("Got Song from cachedbox ($songId)");
       // if contains stream Info
       final streamInfo = Hive.box("SongsCache").get(songId)["streamInfo"];
-      Audio? cacheAudioPlaceholder;
-      if (streamInfo != null && streamInfo.isNotEmpty) {
+      if (streamInfo != null) {
         streamInfo[1]['url'] = "file://$_cacheDir/cachedSongs/$songId.mp3";
-        cacheAudioPlaceholder = Audio.fromJson(streamInfo[1]);
-      } else {
-        cacheAudioPlaceholder = Audio(
-            audioCodec: Codec.mp4a,
-            bitrate: 0,
-            loudnessDb: 0,
-            duration: 0,
-            size: 0,
-            url: "file://$_cacheDir/cachedSongs/$songId.mp3",
-            itag: 0);
+        return streamInfo;
       }
 
-      return HMStreamingData(
-          playable: true,
-          statusMSG: "OK",
-          lowQualityAudio: cacheAudioPlaceholder,
-          highQualityAudio: cacheAudioPlaceholder);
+      return [
+        true,
+        {"url": "file://$_cacheDir/cachedSongs/$songId.mp3"}
+      ];
     } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
       final song = songDownloadsBox.get(songId);
-      final streamInfoJson = song["streamInfo"];
-      Audio? audio;
+      final streamInfo = song["streamInfo"] ?? [];
       final path = song['url'];
-      if (streamInfoJson != null && streamInfoJson.isNotEmpty) {
-        audio = Audio.fromJson(streamInfoJson[1]);
-      } else {
-        audio = Audio(
-            itag: 140,
-            audioCodec: Codec.mp4a,
-            bitrate: 0,
-            duration: 0,
-            loudnessDb: 0,
-            url: path,
-            size: 0);
+      if (streamInfo.isEmpty) {
+        streamInfo.addAll([
+          true,
+          {"url": path}
+        ]);
       }
-
-      final streamInfo = HMStreamingData(
-          playable: true,
-          statusMSG: "OK",
-          highQualityAudio: audio,
-          lowQualityAudio: audio);
 
       if (path.contains(
           "${Get.find<SettingsScreenController>().supportDirPath}/Music")) {
@@ -768,27 +735,33 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else {
       //check if song stream url is cached and allocate url accordingly
       final songsUrlCacheBox = Hive.box("SongsUrlCache");
-      final qualityIndex = Hive.box('AppPrefs').get('streamingQuality') ?? 1;
-      HMStreamingData? streamInfo;
+      final qualityIndex = Hive.box('AppPrefs').get('streamingQuality');
+      dynamic streamInfo;
       if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
-        final streamInfoJson = songsUrlCacheBox.get(songId);
-        if (streamInfoJson.runtimeType.toString().contains("Map") &&
-            !isExpired(url: (streamInfoJson['lowQualityAudio']['url']))) {
-          printINFO("Got cached Url ($songId)");
-          streamInfo = HMStreamingData.fromJson(streamInfoJson);
+        streamInfo = songsUrlCacheBox.get(songId);
+
+        if (streamInfo.length == 3 &&
+            streamInfo[0] &&
+            !isExpired(
+                url: (songsUrlCacheBox.get(songId))[qualityIndex + 1]['url'])) {
+          printINFO("Got URLLLLLL cachedbox ($songId)");
+        } else {
+          streamInfo = await Isolate.run(() => getStreamInfo(songId));
+          if (streamInfo != null) songsUrlCacheBox.put(songId, streamInfo);
+        }
+      } else {
+        streamInfo = await Isolate.run(() => getStreamInfo(
+            songId)); //(await musicServices.getSongStreamUrl(songId));
+        if (streamInfo != null) {
+          songsUrlCacheBox.put(songId, streamInfo);
+          printERROR("Url cached in Box for songId $songId");
         }
       }
 
-      if (streamInfo == null) {
-        final token = RootIsolateToken.instance;
-        final streamInfoJson =
-            await Isolate.run(() => getStreamInfo(songId, token));
-        streamInfo = HMStreamingData.fromJson(streamInfoJson);
-        if (streamInfo.playable) songsUrlCacheBox.put(songId, streamInfoJson);
-      }
-
-      streamInfo.setQualityIndex(qualityIndex as int);
-      return streamInfo;
+      /// [it will return [playbility status, streamInfo in map as per quality selected]
+      return streamInfo != null
+          ? [streamInfo[0], streamInfo[qualityIndex + 1]]
+          : null;
     }
   }
 }

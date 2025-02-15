@@ -44,8 +44,7 @@ class HomeScreenController extends GetxController {
 
       if (loaded) {
         final currTimeSecsDiff = DateTime.now().millisecondsSinceEpoch -
-            (box.get("homeScreenDataTime") ??
-                DateTime.now().millisecondsSinceEpoch);
+            box.get("homeScreenDataTime");
         if (currTimeSecsDiff / 1000 > 3600 * 8) {
           loadContentFromNetwork(silent: true);
         }

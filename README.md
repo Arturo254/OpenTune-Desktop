@@ -4,9 +4,6 @@
   <img src="https://github.com/user-attachments/assets/0d3db989-fefa-4381-bf0c-8bd5ebdabd7b" alt="Icono de OpenTune" width="200"/>
 </div>
 
-![mockup](https://github.com/user-attachments/assets/9915696a-bcfd-4b9b-8dbd-c81e5a9a137e)
-
-
 <p align="center">
   <a href="https://github.com/Arturo254/OpenTune/releases">
     <img src="https://img.shields.io/github/v/release/Arturo254/InnerTune?style=for-the-badge&logo=github&color=blue" alt="Última versión"/>
@@ -46,11 +43,16 @@
 | ![Music Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/music.svg)    | Reproducción de YouTube y YouTube Music sin anuncios          |
 | ![Volume Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/volume-2.svg)   | Controles de reproducción en la bandeja del sistema          |
 | ![Search Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/search.svg)       | Búsqueda avanzada de canciones, videos, álbumes y listas     |
+| ![Key Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/key.svg)              | Inicio de sesión integrado                                   |
 | ![Book Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/book-open.svg)      | Gestión completa de tu biblioteca musical                    |
 | ![Cloud Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/download-cloud.svg) | Descarga y almacenamiento en caché para reproducción offline |
 | ![Comment Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/message-square.svg) | Letras sincronizadas                                         |
+| ![Forward Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/fast-forward.svg) | Omisión inteligente de silencios                            |
+| ![Volume Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/volume-x.svg)    | Normalización de audio                                       |
+| ![Clock Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/clock.svg)          | Ajuste de tempo y tono                                       |
 | ![Moon Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/moon.svg)            | Tema dinámico con integración del sistema                    |
 | ![Globe Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/globe.svg)          | Soporte multiidioma                                          |
+| ![Link Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/link.svg)            | Descarga de portada de álbum                                 |
 | ![Gem Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/box.svg)             | Diseño Material 3                                            |
 | ![Window Icon](https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/icons/maximize-2.svg)    | Soporte multiplataforma (Windows, macOS, Linux)              |
 

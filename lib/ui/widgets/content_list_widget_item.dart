@@ -80,14 +80,14 @@ class ContentListItem extends StatelessWidget {
                         child: Center(
                             child: Icon(
                           content.playlistId == 'LIBRP'
-                              ? Icons.history
+                              ? Icons.history_rounded
                               : content.playlistId == 'LIBFAV'
-                                  ? Icons.favorite
+                                  ? Icons.favorite_rounded
                                   : content.playlistId == 'SongsCache'
-                                      ? Icons.flight
+                                      ? Icons.flight_rounded
                                       : content.playlistId == 'SongDownloads'
                                           ? Icons.download
-                                          : Icons.playlist_play,
+                                          : Icons.playlist_play_rounded,
                           color: Colors.white,
                           size: 40,
                         ))),

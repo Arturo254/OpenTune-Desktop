@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:terminate_restart/terminate_restart.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '/utils/helper.dart';
@@ -75,11 +75,7 @@ class RestoreDialog extends StatelessWidget {
                         if (restoreDialogController.restoreProgress.toInt() ==
                             restoreDialogController.filesToRestore.toInt()) {
                           GetPlatform.isAndroid
-                              ? TerminateRestart.instance.restartApp(
-                                  options: const TerminateRestartOptions(
-                                    terminate: true,
-                                  ),
-                                )
+                              ? Restart.restartApp()
                               : exit(0);
                         } else {
                           restoreDialogController.backup();

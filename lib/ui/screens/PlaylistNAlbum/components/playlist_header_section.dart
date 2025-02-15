@@ -192,8 +192,9 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                 playListNAlbumScreenController
                                                         .isAddedToLibrary
                                                         .isFalse
-                                                    ? Icons.bookmark_add
-                                                    : Icons.bookmark_added)),
+                                                    ? Icons.bookmark_add_rounded
+                                                    : Icons
+                                                        .bookmark_added_rounded)),
                                     if (playListNAlbumScreenController
                                         .isAddedToLibrary.isTrue)
                                       IconButton(
@@ -279,7 +280,8 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                         },
                                         icon: playListNAlbumScreenController
                                                 .isDownloaded.isTrue
-                                            ? const Icon(Icons.download_done)
+                                            ? const Icon(
+                                                Icons.download_done_rounded)
                                             : controller.playlistQueue
                                                         .containsKey(id) &&
                                                     controller.currentPlaylistId
@@ -314,7 +316,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                           Center(
                                                               child: Icon(
                                                             Icons
-                                                                .hourglass_bottom,
+                                                                .hourglass_bottom_rounded,
                                                             size: 20,
                                                           )),
                                                           Center(
@@ -325,7 +327,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                         ],
                                                       )
                                                     : const Icon(
-                                                        Icons.download),
+                                                        Icons.download_rounded),
                                       );
                                     })
                                   ],
@@ -410,7 +412,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                             },
                             icon: playListNAlbumScreenController
                                     .isDownloaded.isTrue
-                                ? const Icon(Icons.download_done)
+                                ? const Icon(Icons.download_done_rounded)
                                 : controller.playlistQueue.containsKey(id) &&
                                         controller.currentPlaylistId
                                                 .toString() ==
@@ -438,7 +440,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                             children: [
                                               Center(
                                                   child: Icon(
-                                                Icons.hourglass_bottom,
+                                                Icons.hourglass_bottom_rounded,
                                                 size: 20,
                                               )),
                                               Center(
@@ -447,7 +449,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                               ))
                                             ],
                                           )
-                                        : const Icon(Icons.download),
+                                        : const Icon(Icons.download_rounded),
                           );
                         })
                       : const SizedBox.shrink(),
@@ -470,7 +472,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    leading: const Icon(Icons.edit),
+                                    leading: const Icon(Icons.edit_rounded),
                                     title: Text("renamePlaylist".tr),
                                     onTap: () {
                                       Navigator.of(context).pop();
@@ -484,7 +486,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                     },
                                   ),
                                   ListTile(
-                                    leading: const Icon(Icons.delete),
+                                    leading: const Icon(Icons.delete_rounded),
                                     title: Text("removePlaylist".tr),
                                     onTap: () {
                                       Navigator.of(context).pop();
@@ -510,7 +512,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                             ),
                           );
                         },
-                        icon: const Icon(Icons.more_vert)),
+                        icon: const Icon(Icons.more_vert_rounded)),
                 ],
               )
             : const SizedBox.shrink()

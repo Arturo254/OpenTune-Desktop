@@ -40,7 +40,7 @@ class SongsLibraryWidget extends StatelessWidget {
             return SortWidget(
               tag: "LibSongSort",
               itemCountTitle: "${libSongsController.librarySongsList.length}",
-              itemIcon: Icons.music_note,
+              itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,
               requiredSortTypes: buildSortTypeSet(true, true),
               isSearchFeatureRequired: true,
@@ -68,7 +68,7 @@ class SongsLibraryWidget extends StatelessWidget {
                         controller.librarySongsList,
                         "library Songs",
                         true,
-                        isPlaylistOrAlbum: true,
+                        isPlaylist: true,
                         playlist: Playlist(
                             title: "Library Songs",
                             playlistId: "SongsCache",
@@ -179,7 +179,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                       ? libralbumCntrller.libraryAlbums.isNotEmpty
                       : librplstCntrller.libraryPlaylists.isNotEmpty)
                   ? LayoutBuilder(builder: (context, constraints) {
-                      //Fix for grid in mobile screen
+                    //Fix for grid in mobile screen 
                       final availableWidth = constraints.maxWidth > 300 &&
                               constraints.maxWidth < 394
                           ? 310.0

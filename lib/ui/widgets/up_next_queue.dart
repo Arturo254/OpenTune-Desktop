@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:opentune/ui/player/player_controller.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 import 'image_widget.dart';
@@ -151,11 +151,11 @@ class UpNextQueue extends StatelessWidget {
                           children: [
                             if (!GetPlatform.isDesktop)
                               const Icon(
-                                Icons.drag_handle,
+                                Icons.drag_handle_rounded,
                               ),
                             playerController.currentSongIndex.value == index
                                 ? const Icon(
-                                    Icons.equalizer,
+                                    Icons.equalizer_rounded,
                                     color: Colors.white,
                                   )
                                 : Text(

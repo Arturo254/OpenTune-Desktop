@@ -209,7 +209,7 @@
     "download": "ダウンロード",
     "personalisation": "カスタマイズ",
     "networkError": "ネットワークエラー！ネットワーク接続をご確認ください。",
-    "downloadError3": "ネットワークやストリームのエラーでダウンロード失敗！再度お試しください",
+    "downloadError3": "ネットワークエラーでダウンロード失敗！再度お試しください",
     "downloadError2": "曲がサーバーの制限によりダウンロード不可能です。再試行でうまくいかもしれません",
     "content": "コンテンツ",
     "queueShufflingDeniedMsg": "シャッフルモードが有効の時はキューをシャッフルできません",
@@ -227,12 +227,8 @@
     "playnextMsg": "公開予定 {Song Name}",
     "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
     "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
-    "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
+    "enableSlidableActionDes": "Enable slideable actions on song tiles",
     "enableSlidableAction": "スライドによる操作",
     "autoDownFavSongDes": "お気に入りに追加した曲を自動でダウンロード",
-    "autoDownFavSong": "お気に入りの曲を自動ダウンロード",
-    "resetToDefault": "初期設定に戻す",
-    "resetToDefaultDes": "アプリの設定を初期値に戻す (要再起動)",
-    "resetToDefaultMsg": "設定の初期化が完了、アプリを再起動してください",
-    "misc": "ほか"
+    "autoDownFavSong": "お気に入りの曲を自動ダウンロード"
 }

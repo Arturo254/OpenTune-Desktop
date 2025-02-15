@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
-import '/ui/player/components/animated_play_button.dart';
+import '../../widgets/loader.dart';
 import '../player_controller.dart';
 
 class PlayerControlWidget extends StatelessWidget {
@@ -21,29 +21,11 @@ class PlayerControlWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: ShaderMask(
-                  shaderCallback: (rect) {
-                    return const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        Colors.white,
-                        Colors.white,
-                        Colors.white,
-                        Colors.white,
-                        Colors.white,
-                        Colors.white,
-                        Colors.transparent
-                      ],
-                    ).createShader(
-                        Rect.fromLTWH(0, 0, rect.width, rect.height));
-                  },
-                  blendMode: BlendMode.dstIn,
-                  child: Obx(() {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Marquee(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(() {
+                        return Marquee(
                           delay: const Duration(milliseconds: 300),
                           duration: const Duration(seconds: 10),
                           id: "${playerController.currentSong.value}_title",
@@ -54,36 +36,36 @@ class PlayerControlWidget extends StatelessWidget {
                             textAlign: TextAlign.start,
                             style: Theme.of(context).textTheme.labelMedium!,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Marquee(
+                        );
+                      }),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GetX<PlayerController>(builder: (controller) {
+                        return Marquee(
                           delay: const Duration(milliseconds: 300),
                           duration: const Duration(seconds: 10),
                           id: "${playerController.currentSong.value}_subtitle",
                           child: Text(
                             playerController.currentSong.value != null
-                                ? playerController.currentSong.value!.artist!
+                                ? controller.currentSong.value!.artist!
                                 : "NA",
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
-                        )
-                      ],
-                    );
-                  }),
-                ),
+                        );
+                      }),
+                    ]),
               ),
               SizedBox(
-                width: 45,
+                width: 55,
                 child: IconButton(
                     onPressed: playerController.toggleFavourite,
                     icon: Obx(() => Icon(
                           playerController.isCurrentSongFav.isFalse
-                              ? Icons.favorite_border
-                              : Icons.favorite,
+                              ? Icons.favorite_border_rounded
+                              : Icons.favorite_rounded,
                           color: Theme.of(context).textTheme.titleMedium!.color,
                         ))),
               ),
@@ -95,16 +77,12 @@ class PlayerControlWidget extends StatelessWidget {
           GetX<PlayerController>(builder: (controller) {
             return ProgressBar(
               thumbRadius: 7,
-              barHeight: 4.5,
               baseBarColor: Theme.of(context).sliderTheme.inactiveTrackColor,
               bufferedBarColor:
                   Theme.of(context).sliderTheme.valueIndicatorColor,
               progressBarColor: Theme.of(context).sliderTheme.activeTrackColor,
               thumbColor: Theme.of(context).sliderTheme.thumbColor,
-              timeLabelTextStyle: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(fontSize: 14),
+              timeLabelTextStyle: Theme.of(context).textTheme.titleMedium,
               progress: controller.progressBarStatus.value.current,
               total: controller.progressBarStatus.value.total,
               buffered: controller.progressBarStatus.value.buffered,
@@ -128,7 +106,7 @@ class PlayerControlWidget extends StatelessWidget {
                                 .withOpacity(0.2),
                       ))),
               _previousButton(playerController, context),
-              const CircleAvatar(radius: 35, child: AnimatedPlayButton(key: Key("playButton"),)),
+              CircleAvatar(radius: 35, child: _playButton()),
               _nextButton(playerController, context),
               Obx(() {
                 return IconButton(
@@ -149,12 +127,45 @@ class PlayerControlWidget extends StatelessWidget {
         ]);
   }
 
+  Widget _playButton() {
+    return GetX<PlayerController>(builder: (controller) {
+      final buttonState = controller.buttonState.value;
+      if (buttonState == PlayButtonState.loading) {
+        return IconButton(
+          icon: const LoadingIndicator(
+            dimension: 20,
+          ),
+          onPressed: () {},
+        );
+      }
+      if (buttonState == PlayButtonState.paused) {
+        return IconButton(
+          icon: const Icon(Icons.play_arrow_rounded),
+          iconSize: 40.0,
+          onPressed: controller.play,
+        );
+      } else if (buttonState == PlayButtonState.playing ||
+          buttonState == PlayButtonState.loading) {
+        return IconButton(
+          icon: const Icon(Icons.pause_rounded),
+          iconSize: 40.0,
+          onPressed: controller.pause,
+        );
+      } else {
+        return IconButton(
+          icon: const Icon(Icons.play_arrow_rounded),
+          iconSize: 40.0,
+          onPressed: () {},
+        );
+      }
+    });
+  }
 
   Widget _previousButton(
       PlayerController playerController, BuildContext context) {
     return IconButton(
       icon: Icon(
-        Icons.skip_previous,
+        Icons.skip_previous_rounded,
         color: Theme.of(context).textTheme.titleMedium!.color,
       ),
       iconSize: 30,
@@ -172,7 +183,7 @@ Widget _nextButton(PlayerController playerController, BuildContext context) {
                 playerController.currentSong.value?.id));
     return IconButton(
         icon: Icon(
-          Icons.skip_next,
+          Icons.skip_next_rounded,
           color: isLastSong
               ? Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2)
               : Theme.of(context).textTheme.titleMedium!.color,

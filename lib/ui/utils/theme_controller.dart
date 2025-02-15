@@ -17,11 +17,10 @@ class ThemeController extends GetxController {
     systemBrightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-    primaryColor.value =
-        Color(Hive.box('appPrefs').get("themePrimaryColor") ?? 4278199603);
+    primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
 
     changeThemeModeType(
-        ThemeType.values[Hive.box('appPrefs').get("themeModeType") ?? 0]);
+        ThemeType.values[Hive.box('appPrefs').get("themeModeType")]);
 
     _listenSystemBrightness();
 
@@ -57,8 +56,8 @@ class ThemeController extends GetxController {
 
   void setTheme(ImageProvider imageProvider, String songId) async {
     if (songId == currentSongId) return;
-    PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
-        ResizeImage(imageProvider, height: 200, width: 200));
+    PaletteGenerator generator =
+        await PaletteGenerator.fromImageProvider(imageProvider);
     //final colorList = generator.colors;
     final paletteColor = generator.dominantColor ??
         generator.darkMutedColor ??
@@ -121,15 +120,15 @@ class ThemeController extends GetxController {
             titleSmall: TextStyle(color: primarySwatch[100]),
             bodyMedium: TextStyle(color: primarySwatch[100]),
             labelMedium: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
                 color: textColor ?? primarySwatch[50]),
             labelSmall: TextStyle(
                 fontSize: 15,
                 color: titleColorSwatch != null
                     ? titleColorSwatch[900]
                     : primarySwatch[100],
-                letterSpacing: 0,
+                letterSpacing: 1,
                 fontWeight: FontWeight.bold),
           ),
           indicatorColor: Colors.white,
@@ -161,7 +160,7 @@ class ThemeController extends GetxController {
           //scaffoldBackgroundColor: primarySwatch[700]
           );
       return baseTheme.copyWith(
-          textTheme: GoogleFonts.interTextTheme(baseTheme.textTheme));
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else if (themeType == ThemeType.dark) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -194,11 +193,11 @@ class ThemeController extends GetxController {
               ),
               titleSmall: TextStyle(),
               labelMedium: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
               labelSmall: TextStyle(
-                  fontSize: 15, letterSpacing: 0, fontWeight: FontWeight.bold),
+                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
               bodyMedium: TextStyle(color: Colors.grey)),
           navigationRailTheme: const NavigationRailThemeData(
               backgroundColor: Colors.black,
@@ -232,7 +231,7 @@ class ThemeController extends GetxController {
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white))));
       return baseTheme.copyWith(
-          textTheme: GoogleFonts.interTextTheme(baseTheme.textTheme));
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -267,11 +266,11 @@ class ThemeController extends GetxController {
               ),
               titleSmall: const TextStyle(),
               labelMedium: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
               labelSmall: const TextStyle(
-                  fontSize: 15, letterSpacing: 0, fontWeight: FontWeight.bold),
+                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
               bodyMedium: TextStyle(color: Colors.grey[700])),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: Colors.white,
@@ -304,7 +303,7 @@ class ThemeController extends GetxController {
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.black))));
       return baseTheme.copyWith(
-          textTheme: GoogleFonts.interTextTheme(baseTheme.textTheme));
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     }
   }
 

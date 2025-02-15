@@ -30,13 +30,13 @@ class NewVersionDialog extends StatelessWidget {
                       onPressed: () {
                         launchUrl(
                           Uri.parse(
-                            'https://github.com/anandnet/Harmony-Music/releases/latest',
+                            'https://github.com/Arturo254/OpenTune/releases/latest',
                           ),
                           mode: LaunchMode.externalApplication,
                         );
                       },
                       child: const Icon(
-                        Icons.download,
+                        Icons.download_rounded,
                         size: 30,
                       ),
                     ),

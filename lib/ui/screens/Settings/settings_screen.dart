@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/helper.dart';
-import 'package:harmonymusic/utils/lang_mapping.dart';
+import 'package:opentune/utils/helper.dart';
+import 'package:opentune/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                             onTap: () {
                               launchUrl(
                                 Uri.parse(
-                                  'https://github.com/anandnet/Harmony-Music/releases/latest',
+                                  'https://github.com/Arturo254/OpenTune/releases/latest',
                                 ),
                                 mode: LaunchMode.externalApplication,
                               );
@@ -67,8 +67,8 @@ class SettingsScreen extends StatelessWidget {
                             tileColor: Theme.of(context).colorScheme.secondary,
                             contentPadding:
                                 const EdgeInsets.only(left: 8, right: 10),
-                            leading:
-                                const CircleAvatar(child: Icon(Icons.download)),
+                            leading: const CircleAvatar(
+                                child: Icon(Icons.download_rounded)),
                             title: Text("newVersionAvailable".tr),
                             visualDensity: const VisualDensity(horizontal: -2),
                             subtitle: Text(
@@ -424,17 +424,6 @@ class SettingsScreen extends StatelessWidget {
                             onChanged: settingsController
                                 .toggleRestorePlaybackSession),
                       )),
-                  ListTile(
-                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text("autoOpenPlayer".tr),
-                    subtitle: Text("autoOpenPlayerDes".tr,
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    trailing: Obx(
-                      () => CustSwitch(
-                          value: settingsController.autoOpenPlayer.value,
-                          onChanged: settingsController.toggleAutoOpenPlayer),
-                    ),
-                  ),
                   if (!isDesktop)
                     ListTile(
                       contentPadding:
@@ -499,7 +488,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                 title: "download".tr,
-                icon: Icons.download,
+                icon: Icons.download_rounded,
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -595,7 +584,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                   title: "${"backup".tr} & ${"restore".tr}",
-                  icon: Icons.restore,
+                  icon: Icons.restore_rounded,
                   children: [
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -627,29 +616,6 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ]),
               CustomExpansionTile(
-                  icon: Icons.miscellaneous_services,
-                  title: "misc".tr,
-                  children: [
-                    ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text("resetToDefault".tr),
-                      subtitle: Text(
-                        "resetToDefaultDes".tr,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      onTap: () {
-                        settingsController
-                            .resetAppSettingsToDefault()
-                            .then((_) {
-                          ScaffoldMessenger.of(Get.context!).showSnackBar(
-                              snackbar(Get.context!, "resetToDefaultMsg".tr,
-                                  size: SanckBarSize.BIG,
-                                  duration: const Duration(seconds: 2)));
-                        });
-                      },
-                    ),
-                  ]),
-              CustomExpansionTile(
                 icon: Icons.info,
                 title: "appInfo".tr,
                 children: [
@@ -664,7 +630,7 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () {
                       launchUrl(
                         Uri.parse(
-                          'https://github.com/anandnet/Harmony-Music',
+                          'https://github.com/Arturo254/OpenTune',
                         ),
                         mode: LaunchMode.externalApplication,
                       );
@@ -675,7 +641,7 @@ class SettingsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Harmony Music",
+                          "OpenTune Desktop",
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(settingsController.currentVersion,
