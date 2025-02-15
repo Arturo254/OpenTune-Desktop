@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-    package="com.Arturo254.opentune">
+        xmlns:tools="http://schemas.android.com/tools">
    <application
-        android:label="OpenTune Desktop"
+        android:label="Harmony Music"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
