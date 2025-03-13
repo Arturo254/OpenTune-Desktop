@@ -1,11 +1,11 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
 AppVersion=1.11.2+24
-AppName=OpenTune
+AppName=OpenTune Desktop
 AppPublisher=Arturo254
-AppPublisherURL=https://github.com/Arturo254/OpenTune-Desktop
-AppSupportURL=https://github.com/Arturo254/OpenTune-Desktop
-AppUpdatesURL=https://github.com/Arturo254/OpenTune-Desktop
+AppPublisherURL=https://github.com/anandnet/Harmony-Music
+AppSupportURL=https://github.com/anandnet/Harmony-Music
+AppUpdatesURL=https://github.com/anandnet/Harmony-Music
 DefaultDirName={autopf}\harmonymusic
 DisableProgramGroupPage=yes
 OutputDir=.
