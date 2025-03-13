@@ -4,13 +4,13 @@ group: Application/Multimedia
 vendor: anandnet
 packager: anandnet
 license: GPLv3
-url: https://github.com/Arturo254/OpenTune
+url: https://github.com/anandnet/Harmony-Music
 
 requires:
   - mpv-libs
   - libappindicator
 
-display_name: OpenTune Desktop
+display_name: Harmony Music
 
 keywords:
   - Opensource

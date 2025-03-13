@@ -230,5 +230,18 @@
     "queueLoopNotDisMsg2": "Không thể bật hàng đợi lập trong chế độ đài phát thanh.",
     "enableSlidableActionDes": "Bật chế độ vuốt trên tiêu đề bài hát",
     "autoDownFavSongDes": "Tự động tải bài hát về sau khi thêm vào danh sách yêu thích",
-    "autoDownFavSong": "Tự động tải về những bài hát được thích"
+    "autoDownFavSong": "Tự động tải về những bài hát được thích",
+    "misc": "Mở rộng",
+    "resetToDefault": "Khôi phục cài đặt mặc định",
+    "resetToDefaultDes": "Khôi phục cài đặt ứng dụng về mặc định ( cần khởi động lại ứng dụng)",
+    "resetToDefaultMsg": "Hoàn tất khôi phục cài đặt ứng dụng về mặc định, vui lòng khởi động lại ứng dụng",
+    "album": "Tập nhạc",
+    "playingfromAlbum": "Phát từ tập nhạc",
+    "playingfromPlaylist": "Phát từ danh sách",
+    "playingfromSelection": "Phát từ danh sách chọn",
+    "playingfromArtist": "Phát theo nghệ sỹ",
+    "randomSelection": "Chọn ngẩu nhiên",
+    "randomRadio": "Đài phát thanh ngẩu nhiên",
+    "autoOpenPlayer": "Tự động mở màn hình phát nhạc",
+    "autoOpenPlayerDes": "Bật/Tắt chức năng tự động mở màn hình phát nhạc sau khi chọn bài hát"
 }
