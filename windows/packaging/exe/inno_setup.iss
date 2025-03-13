@@ -31,8 +31,8 @@ Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ign
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\OpenTune Desktop"; Filename: "{app}\opentune.exe"
-Name: "{autodesktop}\OpenTune Desktop"; Filename: "{app}\opentune.exe"; Tasks: desktopicon
+Name: "{autoprograms}\Harmony Music"; Filename: "{app}\opentune.exe"
+Name: "{autodesktop}\Harmony Music"; Filename: "{app}\opentune.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\opentune.exe"; Description: "{cm:LaunchProgram,{#StringChange('OpenTune Desktop', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\opentune.exe"; Description: "{cm:LaunchProgram,{#StringChange('Harmony Music', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
