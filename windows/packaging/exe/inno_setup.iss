@@ -36,4 +36,4 @@ Name: "{autoprograms}\opentune"; Filename: "{app}\opentune.exe"
 Name: "{autodesktop}\opentune"; Filename: "{app}\opentune.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\opentune.exe"; Description: "{cm:LaunchProgram,{#StringChange('OpenTune Desktop', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\opentune.exe"; Description: "{cm:LaunchProgram,{#StringChange('opentune', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
