@@ -1,7 +1,7 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
 AppVersion=1.11.2+24
-AppName=OpenTune Desktop
+AppName=opentune
 AppPublisher=Arturo254
 AppPublisherURL=https://github.com/anandnet/Harmony-Music
 AppSupportURL=https://github.com/anandnet/Harmony-Music
