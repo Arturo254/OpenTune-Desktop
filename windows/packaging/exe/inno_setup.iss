@@ -6,7 +6,7 @@ AppPublisher=Arturo254
 AppPublisherURL=https://github.com/anandnet/Harmony-Music
 AppSupportURL=https://github.com/anandnet/Harmony-Music
 AppUpdatesURL=https://github.com/anandnet/Harmony-Music
-DefaultDirName={autopf}\harmonymusic
+DefaultDirName={autopf}\opentune
 DisableProgramGroupPage=yes
 OutputDir=.
 OutputBaseFilename=opentune-1.11.2
@@ -32,8 +32,8 @@ Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ign
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\Harmony Music"; Filename: "{app}\harmonymusic.exe"
-Name: "{autodesktop}\Harmony Music"; Filename: "{app}\harmonymusic.exe"; Tasks: desktopicon
+Name: "{autoprograms}\Harmony Music"; Filename: "{app}\opentune.exe"
+Name: "{autodesktop}\Harmony Music"; Filename: "{app}\opentune.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\harmonymusic.exe"; Description: "{cm:LaunchProgram,{#StringChange('Harmony Music', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\opentune.exe"; Description: "{cm:LaunchProgram,{#StringChange('Harmony Music', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
