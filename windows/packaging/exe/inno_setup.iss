@@ -19,6 +19,7 @@ LicenseFile=..\..\LICENSE
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
