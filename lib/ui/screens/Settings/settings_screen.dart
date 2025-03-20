@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/helper.dart';
-import 'package:harmonymusic/utils/lang_mapping.dart';
+import 'package:opentune/utils/helper.dart';
+import 'package:opentune/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';

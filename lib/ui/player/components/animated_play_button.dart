@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:opentune/ui/player/player_controller.dart';
 
 import '../../widgets/loader.dart';
 
@@ -20,7 +20,7 @@ class AnimatedPlayButton extends StatefulWidget {
 class _AnimatedPlayButtonState extends State<AnimatedPlayButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  
+
   @override
   void initState() {
     super.initState();
