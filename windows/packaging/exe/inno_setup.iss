@@ -30,6 +30,7 @@ Source: "..\..\build\windows\x64\runner\Release\opentune.exe"; DestDir: "{app}";
 Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
+
 [Icons]
 Name: "{autoprograms}\OpenTune Desktop"; Filename: "{app}\opentune.exe"
 Name: "{autodesktop}\OpenTune Desktop"; Filename: "{app}\opentune.exe"; Tasks: desktopicon
