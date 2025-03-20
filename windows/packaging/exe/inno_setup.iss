@@ -26,10 +26,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\build\windows\x64\runner\Release\opentune.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\OpenTune-Desktop\dist\opentune.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\OpenTune-Desktop\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-
 
 [Icons]
 Name: "{autoprograms}\OpenTune Desktop"; Filename: "{app}\opentune.exe"
